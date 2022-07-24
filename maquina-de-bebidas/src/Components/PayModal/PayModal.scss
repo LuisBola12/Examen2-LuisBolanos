@@ -1,0 +1,51 @@
+.body-cost{
+    width: 50%;
+    height: 100%;
+}
+.body-controls{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.body-order-to-pay{
+    width: 100%;
+    height: 100%;
+}
+.label-title{
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+.body-pay-order{
+    width: 100%;
+    height: 90%;
+}
+.body-insert-money{
+    width: 100%;
+    height: 90%;
+}
+.body-coins{
+    width: 100%;
+    height: 70%;
+    display: flex;
+    flex-direction: row;
+}
+.order-coins{
+    width: 100%;
+    display: flex;
+    flex-direction: column; 
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+.money-button{
+    height: 40px;
+    width: 175px;
+    font-size: 1.4rem;
+    border: none;
+    background-color: rgb(14, 52, 53);
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
