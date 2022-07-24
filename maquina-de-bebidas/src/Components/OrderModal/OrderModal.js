@@ -1,8 +1,9 @@
 import React from "react";
 import "./OrderModal.scss";
 import { handleOrder } from "./../../Utils/handleOrder";
+import Swal from 'sweetalert2';
 
-export const OrderModal = ({ closeModal,order,setOrder,cost,setCost}) => {
+export const OrderModal = ({ closeModal,order,setOrder,cost,setCost,setOpenPayModal}) => {
   const modifyOrder = (drinkName,price) =>{
     const newOrder = handleOrder(drinkName,price,order);
     setOrder(newOrder);
@@ -14,6 +15,18 @@ export const OrderModal = ({ closeModal,order,setOrder,cost,setCost}) => {
         newCost+= element.price * element.quantity;
     });
     setCost(newCost);
+  }
+  const handlePayment = () => {
+    if(order.length !== 0){
+      closeModal(false);
+      setOpenPayModal(true);
+    }else{
+      Swal.fire({
+        icon: 'error',
+        title: 'No puedes pagar nada...',
+        text: 'Ingresa una orden primero antes de pagar!',
+      })
+    }
   }
   return (
     <div className="modal-background">
@@ -119,8 +132,8 @@ export const OrderModal = ({ closeModal,order,setOrder,cost,setCost}) => {
             Cancelar
           </button>
           <button className="confirm-button" onClick={()=>{
-            closeModal(false);
-          }}>Ordenar</button>
+            handlePayment()
+          }}>Pagar</button>
         </div>
       </div>
     </div>

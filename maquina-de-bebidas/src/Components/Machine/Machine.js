@@ -1,15 +1,30 @@
 import { React, useState } from "react";
 import { OrderModal } from "../OrderModal/OrderModal";
 import "./Machine.scss";
+import { PayModal } from './../PayModal/PayModal';
+import Swal from 'sweetalert2';
 
 export const Machine = () => {
-  const [openModal, setOpenModal] = useState(true);
+  const [openOrderModal, setOpenOrderModal] = useState(false);
+  const [openPayModal, setOpenPayModal] = useState(false);
   let [order, setOrder] = useState([]);
   let [cost,setCost] = useState(0);
+  const handlePayment = () =>{
+    if(order.length !== 0){
+      setOpenPayModal(true);
+    }else{
+      Swal.fire({
+        icon: 'error',
+        title: 'No puedes pagar nada...',
+        text: 'Ingresa una orden primero antes de pagar!',
+      }); 
+    }
+  }
   return (
     <>
-    {openModal && <OrderModal closeModal={setOpenModal} order={order} setOrder={setOrder} cost={cost} setCost={setCost}/>}
-    <div className="machine-parent">
+    {openOrderModal && <OrderModal closeModal={setOpenOrderModal} order={order} setOrder={setOrder} cost={cost} setCost={setCost} setOpenPayModal={setOpenPayModal}/>}
+    {openPayModal && <PayModal closeModal={setOpenPayModal} order={order} setOrder={setOrder} cost={cost} setCost={setCost} />}
+    <div className="machine-parent">  
       <div className="machine-body">
         <div className="machine-top">Maquina de Bebidas</div>
         <div className="machine-drinks_control">
@@ -50,7 +65,7 @@ export const Machine = () => {
               <button
                 className="order-button"
                 onClick={() => {
-                  setOpenModal(true);
+                  setOpenOrderModal(true);
                 }}
               >
                 Ordenar
@@ -61,7 +76,10 @@ export const Machine = () => {
               }}>Cancelar Orden</button>
             </div>
             <div className="machine-pay">
-              <button className="pay-button">Pagar</button>
+              <button className="pay-button"
+              onClick={() => {
+                handlePayment();
+              }}>Pagar</button>
             </div>
           </div>
         </div>
