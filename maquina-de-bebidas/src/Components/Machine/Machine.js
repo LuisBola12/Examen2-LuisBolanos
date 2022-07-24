@@ -4,9 +4,11 @@ import "./Machine.scss";
 
 export const Machine = () => {
   const [openModal, setOpenModal] = useState(true);
+  let [order, setOrder] = useState([]);
+  let [cost,setCost] = useState(0);
   return (
     <>
-    {openModal && <OrderModal closeModal={setOpenModal}/>}
+    {openModal && <OrderModal closeModal={setOpenModal} order={order} setOrder={setOrder} cost={cost} setCost={setCost}/>}
     <div className="machine-parent">
       <div className="machine-body">
         <div className="machine-top">Maquina de Bebidas</div>
@@ -53,7 +55,10 @@ export const Machine = () => {
               >
                 Ordenar
               </button>
-              <button className="order-button">Cancelar Orden</button>
+              <button className="order-button" onClick={() => {
+                setCost(0);
+                setOrder([]);
+              }}>Cancelar Orden</button>
             </div>
             <div className="machine-pay">
               <button className="pay-button">Pagar</button>

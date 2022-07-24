@@ -1,4 +1,4 @@
-export const handleOrder = (drinkName, price,order,setOrder) => {
+export const handleOrder = (drinkName, price,order) => {
     const orderCopy = order;
     if (orderCopy.length === 0) {
       const newItem = { drink: drinkName, price: price, quantity: 1 };
@@ -16,5 +16,5 @@ export const handleOrder = (drinkName, price,order,setOrder) => {
         orderCopy.push(newItem);
       }
     }
-    setOrder(orderCopy);
+    return orderCopy;
   };

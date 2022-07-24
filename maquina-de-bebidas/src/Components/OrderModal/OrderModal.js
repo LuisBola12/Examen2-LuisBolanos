@@ -1,11 +1,19 @@
-import { React, useState } from "react";
+import React from "react";
 import "./OrderModal.scss";
 import { handleOrder } from "./../../Utils/handleOrder";
 
-export const OrderModal = ({ closeModal }) => {
-  const [order, setOrder] = useState([]);
+export const OrderModal = ({ closeModal,order,setOrder,cost,setCost}) => {
+  const modifyOrder = (drinkName,price) =>{
+    const newOrder = handleOrder(drinkName,price,order);
+    setOrder(newOrder);
+    calculateTotalCost();
+  }
   const calculateTotalCost = () => {
-
+    let newCost = 0;
+    order.forEach(element => {
+        newCost+= element.price * element.quantity;
+    });
+    setCost(newCost);
   }
   return (
     <div className="modal-background">
@@ -43,7 +51,7 @@ export const OrderModal = ({ closeModal }) => {
                     <button
                       className="drink-button"
                       onClick={() =>
-                        handleOrder("CocaCola", 500, order, setOrder)
+                        modifyOrder("CocaCola", 500)
                       }
                     >
                       CocaCola
@@ -52,7 +60,7 @@ export const OrderModal = ({ closeModal }) => {
                   <div>
                     <button
                       className="drink-button"
-                      onClick={() => handleOrder("Pepsi", 600, order, setOrder)}
+                      onClick={() => modifyOrder("Pepsi", 600)}
                     >
                       Pepsi
                     </button>
@@ -60,7 +68,7 @@ export const OrderModal = ({ closeModal }) => {
                   <div>
                     <button
                       className="drink-button"
-                      onClick={() => handleOrder("Fanta", 550, order, setOrder)}
+                      onClick={() => modifyOrder("Fanta", 550)}
                     >
                       Fanta
                     </button>
@@ -69,7 +77,7 @@ export const OrderModal = ({ closeModal }) => {
                     <button
                       className="drink-button"
                       onClick={() =>
-                        handleOrder("Sprite", 725, order, setOrder)
+                        modifyOrder("Sprite", 725)
                       }
                     >
                       Sprite
@@ -84,18 +92,18 @@ export const OrderModal = ({ closeModal }) => {
             <div className="order-values">
               <div className="order-quantity">
                 {order.map((element) => (
-                  <div>{`x${element.quantity}`}</div>
+                  <div key={element.drink}>{`x${element.quantity}`}</div>
                 ))}
               </div>
               <div className="order-drinks">
                 {order.map((element) => (
-                  <div>{`x${element.name}`}</div>
+                  <div key={element.drink}>{`${element.drink}`}</div>
                 ))}
               </div>
             </div>
             <div className="order-total">
               <div className="total-div">Total:</div>
-              <div className="total-cost">{ order.length !==0 ? `₡${calculateTotalCost}`: '' }</div>
+              <div className="total-cost">{`₡${cost}`}</div>
             </div>
           </div>
         </div>
@@ -104,11 +112,15 @@ export const OrderModal = ({ closeModal }) => {
             className="cancel-button"
             onClick={() => {
               closeModal(false);
+              setCost(0);
+              setOrder([]);
             }}
           >
             Cancelar
           </button>
-          <button className="confirm-button">Ordenar</button>
+          <button className="confirm-button" onClick={()=>{
+            closeModal(false);
+          }}>Ordenar</button>
         </div>
       </div>
     </div>
