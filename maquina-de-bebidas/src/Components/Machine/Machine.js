@@ -3,7 +3,7 @@ import { OrderModal } from "../OrderModal/OrderModal";
 import "./Machine.scss";
 
 export const Machine = () => {
-  const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState(true);
   return (
     <>
     {openModal && <OrderModal closeModal={setOpenModal}/>}
