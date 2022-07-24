@@ -2,6 +2,7 @@ import React from "react";
 import "./OrderModal.scss";
 import { handleOrder } from "./../../Utils/handleOrder";
 import Swal from 'sweetalert2';
+import {drinks} from "../../Data/drinks";
 
 export const OrderModal = ({ closeModal,order,setOrder,cost,setCost,setOpenPayModal}) => {
   const modifyOrder = (drinkName,price) =>{
@@ -47,17 +48,15 @@ export const OrderModal = ({ closeModal,order,setOrder,cost,setCost,setOpenPayMo
             <h5>Bebidas</h5>
             <div className="modal-values">
               <div className="modal-quantity">
-                <div>x10</div>
-                <div>x8</div>
-                <div>x10</div>
-                <div>x15</div>
+              {drinks.map((element) => (
+                  <div key={element.name}>{`x${element.quantity}`}</div>
+                ))}
               </div>
               <div className="modal-drinks">
                 <div className="modal-drinks-price">
-                  <div>₡500</div>
-                  <div>₡600</div>
-                  <div>₡550</div>
-                  <div>₡725</div>
+                {drinks.map((element) => (
+                  <div key={element.name}>{`₡${element.price}`}</div>
+                ))}
                 </div>
                 <div className="modal-drinks-name">
                   <div>
