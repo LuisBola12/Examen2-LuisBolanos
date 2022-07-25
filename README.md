@@ -27,7 +27,7 @@
     `npm start`
     Una vez realizado esto una ventana de nuestro navegador se nos abrirá con la siguiente vista.
     ![](https://i.imgur.com/PjV7aBD.png)
-5. En caso de querer correr los casos de prueba solo es necesario correr en una terminal:
+5. En caso de querer correr las pruebas unitarias solo es necesario correr en una terminal:
     `npm run test`
      Adjunto screenshot de lo que debería de suceder:
      ![](https://i.imgur.com/eMQpjjU.png)
