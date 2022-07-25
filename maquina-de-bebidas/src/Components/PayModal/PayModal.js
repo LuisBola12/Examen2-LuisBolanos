@@ -5,7 +5,7 @@ import { getStringOfChange, pay } from './../../Utils/pay';
 import { resetDrinksQuantity } from './../../Utils/resetDrinksQuantity';
 import { drinks } from "../../Data/drinks";
 
-export const PayModal = ({ closeModal, order, setOrder, cost, setCost }) => {
+export const PayModal = ({ closeModal, order, setOrder, cost, setCost, setPayHasBeenMade }) => {
   let [moneyInserted, setMoneyInserted] = useState(0);
   let coins = [1000, 500, 100, 50, 25];
   let [coinsInserted, setCoinInserted] = useState([
@@ -45,6 +45,7 @@ export const PayModal = ({ closeModal, order, setOrder, cost, setCost }) => {
           setOrder([]);
           setCost(0);
           closeModal(false);
+          setPayHasBeenMade(true);
         });
       }else{
         const string = getStringOfChange(result);
@@ -56,6 +57,7 @@ export const PayModal = ({ closeModal, order, setOrder, cost, setCost }) => {
           setOrder([]);
           setCost(0);
           closeModal(false);
+          setPayHasBeenMade(true);
         });
       }
     }else{
