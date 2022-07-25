@@ -3,12 +3,30 @@ import "./OrderModal.scss";
 import { handleOrder } from "./../../Utils/handleOrder";
 import Swal from 'sweetalert2';
 import {drinks} from "../../Data/drinks";
+import { resetDrinksQuantity } from './../../Utils/resetDrinksQuantity';
 
 export const OrderModal = ({ closeModal,order,setOrder,cost,setCost,setOpenPayModal}) => {
+  const modifyDrinksCopy = (drinkName) =>{
+    drinks.forEach(element => {
+      if (Object.values(element).includes(drinkName)) {
+        element.quantity--;
+      }
+    });
+  }
   const modifyOrder = (drinkName,price) =>{
-    const newOrder = handleOrder(drinkName,price,order);
-    setOrder(newOrder);
-    calculateTotalCost();
+    let obj = drinks.find(drink => drink.name === drinkName);
+    if(obj.quantity === 0){
+      Swal.fire({
+        icon: 'warning',
+        title: 'Bebida fuera de servicio...',
+        text: `Se acabo la cantidad de bebidas de ${drinkName} en la maquina. `,
+      })
+    }else{
+      const newOrder = handleOrder(drinkName,price,order);
+      setOrder(newOrder);
+      calculateTotalCost();
+      modifyDrinksCopy(drinkName);
+    }
   }
   const calculateTotalCost = () => {
     let newCost = 0;
@@ -36,6 +54,9 @@ export const OrderModal = ({ closeModal,order,setOrder,cost,setCost,setOpenPayMo
           className="close-button"
           onClick={() => {
             closeModal(false);
+            resetDrinksQuantity(order,drinks);
+            setOrder([]);
+            setCost(0);
           }}
         >
           X
@@ -125,13 +146,14 @@ export const OrderModal = ({ closeModal,order,setOrder,cost,setCost,setOpenPayMo
             onClick={() => {
               closeModal(false);
               setCost(0);
+              resetDrinksQuantity(order,drinks);
               setOrder([]);
             }}
           >
             Cancelar
           </button>
           <button className="confirm-button" onClick={()=>{
-            handlePayment()
+            handlePayment();
           }}>Pagar</button>
         </div>
       </div>

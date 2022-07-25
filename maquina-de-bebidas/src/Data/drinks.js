@@ -1,4 +1,4 @@
-export const drinks = [
+export let drinks = [
     {name:"CocaCola",
     price:500,
     quantity:10},
