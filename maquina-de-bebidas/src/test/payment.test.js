@@ -5,12 +5,19 @@ test( 'Estimates the amount of coins to be paid by a type of coin, and when it c
     const money = 450;
     expect(estimateAmountOfCoin(coin,money)).toStrictEqual([50,4]);
 });
-
+test( 'Estimates the amount of coins to be paid with 25 an 100 of money.', () => {
+    const coin =  25;
+    const money = 100;
+    expect(estimateAmountOfCoin(coin,money)).toStrictEqual([0,4]);
+});
 test( 'Estimates the change to return and wich coins the system has to return', () => {
     const money = 450;
     expect(estimateChange(money)).toStrictEqual([{"coin":100,"quantity":4},{"coin":50,"quantity":1}]);
 });
-
+test( 'Estimates the change of 275', () => {
+    const money = 275;
+    expect(estimateChange(money)).toStrictEqual([{"coin":100,"quantity":2},{"coin":50,"quantity":1},{"coin":25,"quantity":1}]);
+});
 test( 'Based on the amount of coins of the machine, verifys if the machine can pay with that type of coin', () => {
     const coin = 500;
     const amount = 5;
