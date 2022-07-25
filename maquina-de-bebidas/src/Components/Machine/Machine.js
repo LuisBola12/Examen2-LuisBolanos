@@ -4,6 +4,7 @@ import "./Machine.scss";
 import { PayModal } from './../PayModal/PayModal';
 import Swal from 'sweetalert2';
 import { drinks } from "../../Data/drinks";
+import { resetDrinksQuantity } from './../../Utils/resetDrinksQuantity';
 
 export const Machine = () => {
   const [openOrderModal, setOpenOrderModal] = useState(false);
@@ -77,6 +78,7 @@ export const Machine = () => {
               </button>
               <button className="order-button" onClick={() => {
                 setCost(0);
+                resetDrinksQuantity(order,drinks);
                 setOrder([]);
               }}>Cancelar Orden</button>
             </div>

@@ -5,14 +5,14 @@ export let coins = [
     },
     {
         coin:100,
-        quantity:30,
+        quantity:20,
     },
     {
         coin:50,
-        quantity:50,
+        quantity:20,
     },
     {
         coin:25,
-        quantity:25,
+        quantity:20,
     },
 ]

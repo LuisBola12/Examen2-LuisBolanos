@@ -1,6 +1,9 @@
 import { React, useState } from "react";
 import "./PayModal.scss";
 import Swal from "sweetalert2";
+import { getStringOfChange, pay } from './../../Utils/pay';
+import { resetDrinksQuantity } from './../../Utils/resetDrinksQuantity';
+import { drinks } from "../../Data/drinks";
 
 export const PayModal = ({ closeModal, order, setOrder, cost, setCost }) => {
   let [moneyInserted, setMoneyInserted] = useState(0);
@@ -30,7 +33,43 @@ export const PayModal = ({ closeModal, order, setOrder, cost, setCost }) => {
       setMoneyInserted(moneyInserted + money);
     }
   };
-  const handlePayment = () => {};
+  const handlePayment = () => {
+    const result = pay(cost,0,moneyInserted);
+    if(result){
+      if(result===true){
+        Swal.fire({
+          icon: "success",
+          title: "Compra Realizada",
+          text: "No hay cambio debido a que su monto fue exacto.",
+        }).then(() => {
+          setOrder([]);
+          setCost(0);
+          closeModal(false);
+        });
+      }else{
+        const string = getStringOfChange(result);
+        Swal.fire({
+          icon: "success",
+          title: "Compra Realizada",
+          html: `<h4>Su vuelto es de:</h4><div>${string}</div>`
+        }).then(() => {
+          setOrder([]);
+          setCost(0);
+          closeModal(false);
+        });
+      }
+    }else{
+      Swal.fire({
+        icon: "error",
+        title: "Ha ocurrido un error a la hora de calcular su vuelto.",
+        text: "La maquina no cuenta con el dinero para darle vuelto, por lo tanto se le devolvera su dinero.",
+      });
+      resetDrinksQuantity(order,drinks);
+      setOrder([]);
+      setCost(0);
+      closeModal(false);
+    }
+  };
   return (
     <div className="modal-background">
       <div className="modal-container">
@@ -104,7 +143,9 @@ export const PayModal = ({ closeModal, order, setOrder, cost, setCost }) => {
           {moneyInserted < cost ? (
             ""
           ) : (
-            <button className="confirm-button" onClick={() => {handlePayment()}}>
+            <button className="confirm-button" onClick={() => {
+                handlePayment();
+              }}>
               Pagar
             </button>
           )}
