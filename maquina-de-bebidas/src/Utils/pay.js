@@ -2,10 +2,11 @@ import { coins } from './../Data/coins';
 
 export const pay = (toPay,moneyInserted,totalMoneyInserted) => {
     if(toPay === totalMoneyInserted){
-        //Todo: Implementar logica de aniadir monedas con las que se pago al inventario
+        supplyCoins(moneyInserted);
         return true;
     }else{
         const value = totalMoneyInserted - toPay;
+        supplyCoins(moneyInserted);
         const change = estimateChange(value);
         return change;
     }
@@ -17,7 +18,15 @@ export const getStringOfChange = (change) =>{
     });
     return string;
 }
-const estimateAmountOfCoin = (coin,amount) => {
+const supplyCoins = (coinsInserted) =>{
+    coinsInserted.forEach(element => {
+        if(element.quantity !== 0 && element.coin !== 1000){
+            let coinToSupply = coins.find(coin=>coin.coin === element.coin);
+            coinToSupply.quantity += element.quantity;
+        }
+    });
+}
+export const estimateAmountOfCoin = (coin,amount) => {
     let coinQuantity = 0;
     let coinToPayWith = coins.find(element=>element.coin === coin);
     let maxAmount = coinToPayWith.quantity;
@@ -28,7 +37,7 @@ const estimateAmountOfCoin = (coin,amount) => {
     }
     return [amount,coinQuantity];
 }
-const verifyCanPayWithThoseCoins = (coinsToPay,coinsNumber) => {
+export const verifyCanPayWithThoseCoins = (coinsToPay,coinsNumber) => {
     let coinToPayWith = coins.find(element=>element.coin === coinsToPay);
     if(coinToPayWith.quantity >= coinsNumber){
         coinToPayWith.quantity -= coinsNumber;
@@ -37,7 +46,7 @@ const verifyCanPayWithThoseCoins = (coinsToPay,coinsNumber) => {
         return false;
     }
 }
-const estimateChange = (monto) => {
+export const estimateChange = (monto) => {
     let index = 0;
     let change = [];
     while(monto > 0 && index < coins.length){

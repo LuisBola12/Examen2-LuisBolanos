@@ -16,7 +16,7 @@ export const PayModal = ({ closeModal, order, setOrder, cost, setCost }) => {
     { coin: 25, quantity: 0 },
   ]);
   const sumMoneyInserted = (money) => {
-    if (cost < moneyInserted) {
+    if (cost <= moneyInserted) {
       Swal.fire({
         icon: "warning",
         title: "Revisa el monto!",
@@ -34,7 +34,7 @@ export const PayModal = ({ closeModal, order, setOrder, cost, setCost }) => {
     }
   };
   const handlePayment = () => {
-    const result = pay(cost,0,moneyInserted);
+    const result = pay(cost,coinsInserted,moneyInserted);
     if(result){
       if(result===true){
         Swal.fire({
