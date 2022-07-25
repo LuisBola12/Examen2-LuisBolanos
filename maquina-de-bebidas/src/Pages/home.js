@@ -9,7 +9,7 @@ export const Home = () => {
     <>
         <div className='page-content'>
             <TopBar text={"Luis Bolanos Valverde B91145"}/>
-            <Machine></Machine>
+            <Machine/>
         </div>
     </>
   )

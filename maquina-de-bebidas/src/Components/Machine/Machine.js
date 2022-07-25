@@ -3,6 +3,7 @@ import { OrderModal } from "../OrderModal/OrderModal";
 import "./Machine.scss";
 import { PayModal } from './../PayModal/PayModal';
 import Swal from 'sweetalert2';
+import { drinks } from "../../Data/drinks";
 
 export const Machine = () => {
   const [openOrderModal, setOpenOrderModal] = useState(false);
@@ -36,6 +37,7 @@ export const Machine = () => {
                   src="https://pin-play-ci0137.s3.amazonaws.com/Coca_logo.png"
                   alt="coca"
                 ></img>
+                <div>{drinks[0].quantity}</div>
               </div>
               <div className="pepsi">
                 <img
@@ -43,6 +45,7 @@ export const Machine = () => {
                   src="https://pin-play-ci0137.s3.amazonaws.com/Pepsi_logo.png"
                   alt="pepsi"
                 ></img>
+                <div>{drinks[1].quantity}</div>
               </div>
               <div className="fanta">
                 <img
@@ -50,6 +53,7 @@ export const Machine = () => {
                   src="https://pin-play-ci0137.s3.amazonaws.com/Fanta_logo.png"
                   alt="fanta"
                 ></img>
+                <div>{drinks[2].quantity}</div>
               </div>
               <div className="sprite">
                 <img
@@ -57,6 +61,7 @@ export const Machine = () => {
                   src="https://pin-play-ci0137.s3.amazonaws.com/Sprite_logo.png"
                   alt="sprite"
                 ></img>
+                <div>{drinks[3].quantity}</div>
               </div>
             </div>
           </div>

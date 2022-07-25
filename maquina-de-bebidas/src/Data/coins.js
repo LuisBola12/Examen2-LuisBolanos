@@ -1,4 +1,4 @@
-export const coins = [
+export let coins = [
     {
         coin:500,
         quantity:20,
