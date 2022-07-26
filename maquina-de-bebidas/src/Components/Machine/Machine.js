@@ -7,6 +7,7 @@ import { drinks } from "../../Data/drinks";
 import { resetDrinksQuantity } from "./../../Utils/resetDrinksQuantity";
 import { checkIfOutOfService } from "../../Utils/checkIfOutOfService";
 import { OutOfService } from "./../OutOfServiceModal/OutOfService";
+import { coins } from './../../Data/coins';
 
 export const Machine = () => {
   const [openOrderModal, setOpenOrderModal] = useState(false);
@@ -27,7 +28,7 @@ export const Machine = () => {
     }
   };
   useEffect(() => {
-    const result = checkIfOutOfService();
+    const result = checkIfOutOfService(drinks,coins);
     if (result) {
       setOutOfService(true);
     }
