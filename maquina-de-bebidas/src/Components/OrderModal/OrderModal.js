@@ -4,9 +4,18 @@ import { handleOrder } from "./../../Utils/handleOrder";
 import Swal from 'sweetalert2';
 import {drinks} from "../../Data/drinks";
 import { resetDrinksQuantity } from './../../Utils/resetDrinksQuantity';
+import {FiMinusCircle} from 'react-icons/fi'
+import { removeElementFromOrder } from './../../Utils/removeElementFromOrder';
 
 export const OrderModal = ({ closeModal,order,setOrder,cost,setCost,setOpenPayModal}) => {
-  const modifyDrinksCopy = (drinkName) =>{
+  const minusDrinksCopy = (drinkName) =>{
+    drinks.forEach(element => {
+      if (Object.values(element).includes(drinkName)) {
+        element.quantity++;
+      }
+    });
+  }
+  const sumDrinksCopy = (drinkName) =>{
     drinks.forEach(element => {
       if (Object.values(element).includes(drinkName)) {
         element.quantity--;
@@ -25,7 +34,7 @@ export const OrderModal = ({ closeModal,order,setOrder,cost,setCost,setOpenPayMo
       const newOrder = handleOrder(drinkName,price,order);
       setOrder(newOrder);
       calculateTotalCost();
-      modifyDrinksCopy(drinkName);
+      sumDrinksCopy(drinkName);
     }
   }
   const calculateTotalCost = () => {
@@ -47,20 +56,15 @@ export const OrderModal = ({ closeModal,order,setOrder,cost,setCost,setOpenPayMo
       })
     }
   }
+  const removeDrink = (drink) => {
+    const newOrder = removeElementFromOrder(order,drink);
+    setOrder(newOrder);
+    calculateTotalCost();
+    minusDrinksCopy(drink);
+  }
   return (
     <div className="modal-background">
       <div className="modal-container">
-        <button
-          className="close-button"
-          onClick={() => {
-            closeModal(false);
-            resetDrinksQuantity(order,drinks);
-            setOrder([]);
-            setCost(0);
-          }}
-        >
-          X
-        </button>
         <div className="title-sector">
           <h1>Ordene su Bebida</h1>
         </div>
@@ -125,7 +129,10 @@ export const OrderModal = ({ closeModal,order,setOrder,cost,setCost,setOpenPayMo
             <div className="order-values">
               <div className="order-quantity">
                 {order.map((element) => (
-                  <div key={element.drink}>{`x${element.quantity}`}</div>
+                  <div className= "button-number"key={element.drink}>
+                    <button className="minus-drink-button" onClick={() => {removeDrink(element.drink)}}><FiMinusCircle/></button>
+                    {`x${element.quantity}`}
+                    </div>
                 ))}
               </div>
               <div className="order-drinks">
