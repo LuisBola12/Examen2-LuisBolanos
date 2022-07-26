@@ -4,7 +4,6 @@ import "./Machine.scss";
 import { PayModal } from "./../PayModal/PayModal";
 import Swal from "sweetalert2";
 import { drinks } from "../../Data/drinks";
-import { resetDrinksQuantity } from "./../../Utils/resetDrinksQuantity";
 import { checkIfOutOfService } from "../../Utils/checkIfOutOfService";
 import { OutOfService } from "./../OutOfServiceModal/OutOfService";
 import { coins } from './../../Data/coins';
@@ -107,16 +106,6 @@ export const Machine = () => {
                   }}
                 >
                   Ordenar
-                </button>
-                <button
-                  className="order-button"
-                  onClick={() => {
-                    setCost(0);
-                    resetDrinksQuantity(order, drinks);
-                    setOrder([]);
-                  }}
-                >
-                  Cancelar Orden
                 </button>
               </div>
               <div className="machine-pay">
