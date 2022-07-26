@@ -1,6 +1,4 @@
-import { drinks } from "../Data/drinks"
-import { coins } from "../Data/coins"
-export const checkIfOutOfService = () => {
+export const checkIfOutOfService = (drinks,coins) => {
     let amountOfDrinks = 0;
     let amountOfCoins = 0;
     drinks.forEach(element => {
